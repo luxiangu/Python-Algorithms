@@ -1,23 +1,22 @@
 """
-    A Hamiltonian cycle (Hamiltonian circuit) is a graph cycle
-    through a graph that visits each node exactly once.
-    Determining whether such paths and cycles exist in graphs
-    is the 'Hamiltonian path problem', which is NP-complete.
+A Hamiltonian cycle (Hamiltonian circuit) is a graph cycle
+through a graph that visits each node exactly once.
+Determining whether such paths and cycles exist in graphs
+is the 'Hamiltonian path problem', which is NP-complete.
 
-    Wikipedia: https://en.wikipedia.org/wiki/Hamiltonian_path
+Wikipedia: https://en.wikipedia.org/wiki/Hamiltonian_path
 """
-from typing import List
 
 
 def valid_connection(
-    graph: List[List[int]], next_ver: int, curr_ind: int, path: List[int]
+    graph: list[list[int]], next_ver: int, curr_ind: int, path: list[int]
 ) -> bool:
     """
     Checks whether it is possible to add next into path by validating 2 statements
     1. There should be path between current and next vertex
     2. Next vertex should not be in path
-    If both validations succeeds we return true saying that it is possible to connect this vertices
-    either we return false
+    If both validations succeed we return True, saying that it is possible to connect
+    this vertices, otherwise we return False
 
     Case 1:Use exact graph as in main function, with initialized values
     >>> graph = [[0, 1, 0, 1, 0],
@@ -47,19 +46,20 @@ def valid_connection(
     return not any(vertex == next_ver for vertex in path)
 
 
-def util_hamilton_cycle(graph: List[List[int]], path: List[int], curr_ind: int) -> bool:
+def util_hamilton_cycle(graph: list[list[int]], path: list[int], curr_ind: int) -> bool:
     """
     Pseudo-Code
     Base Case:
-    1. Chceck if we visited all of vertices
-        1.1 If last visited vertex has path to starting vertex return True either return False
+    1. Check if we visited all of vertices
+        1.1 If last visited vertex has path to starting vertex return True either
+            return False
     Recursive Step:
     2. Iterate over each vertex
         Check if next vertex is valid for transiting from current vertex
             2.1 Remember next vertex as next transition
             2.2 Do recursive call and check if going to this vertex solves problem
-            2.3 if next vertex leads to solution return True
-            2.4 else backtrack, delete remembered vertex
+            2.3 If next vertex leads to solution return True
+            2.4 Else backtrack, delete remembered vertex
 
     Case 1: Use exact graph as in main function, with initialized values
     >>> graph = [[0, 1, 0, 1, 0],
@@ -71,10 +71,11 @@ def util_hamilton_cycle(graph: List[List[int]], path: List[int], curr_ind: int) 
     >>> curr_ind = 1
     >>> util_hamilton_cycle(graph, path, curr_ind)
     True
-    >>> print(path)
+    >>> path
     [0, 1, 2, 4, 3, 0]
 
-    Case 2: Use exact graph as in previous case, but in the properties taken from middle of calculation
+    Case 2: Use exact graph as in previous case, but in the properties taken from
+        middle of calculation
     >>> graph = [[0, 1, 0, 1, 0],
     ...          [1, 0, 1, 1, 1],
     ...          [0, 1, 0, 0, 1],
@@ -84,7 +85,7 @@ def util_hamilton_cycle(graph: List[List[int]], path: List[int], curr_ind: int) 
     >>> curr_ind = 3
     >>> util_hamilton_cycle(graph, path, curr_ind)
     True
-    >>> print(path)
+    >>> path
     [0, 1, 2, 4, 3, 0]
     """
 
@@ -94,10 +95,10 @@ def util_hamilton_cycle(graph: List[List[int]], path: List[int], curr_ind: int) 
         return graph[path[curr_ind - 1]][path[0]] == 1
 
     # Recursive Step
-    for next in range(0, len(graph)):
-        if valid_connection(graph, next, curr_ind, path):
+    for next_ver in range(len(graph)):
+        if valid_connection(graph, next_ver, curr_ind, path):
             # Insert current vertex  into path as next transition
-            path[curr_ind] = next
+            path[curr_ind] = next_ver
             # Validate created path
             if util_hamilton_cycle(graph, path, curr_ind + 1):
                 return True
@@ -106,7 +107,7 @@ def util_hamilton_cycle(graph: List[List[int]], path: List[int], curr_ind: int) 
     return False
 
 
-def hamilton_cycle(graph: List[List[int]], start_index: int = 0) -> List[int]:
+def hamilton_cycle(graph: list[list[int]], start_index: int = 0) -> list[int]:
     r"""
     Wrapper function to call subroutine called util_hamilton_cycle,
     which will either return array of vertices indicating hamiltonian cycle

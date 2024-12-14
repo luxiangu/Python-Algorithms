@@ -10,18 +10,18 @@ def remove_duplicates(key: str) -> str:
 
     key_no_dups = ""
     for ch in key:
-        if ch == " " or ch not in key_no_dups and ch.isalpha():
+        if ch == " " or (ch not in key_no_dups and ch.isalpha()):
             key_no_dups += ch
     return key_no_dups
 
 
-def create_cipher_map(key: str) -> dict:
+def create_cipher_map(key: str) -> dict[str, str]:
     """
     Returns a cipher map given a keyword.
     :param key: keyword to use
     :return: dictionary cipher map
     """
-    # Create alphabet list
+    # Create a list of the letters in the alphabet
     alphabet = [chr(i + 65) for i in range(26)]
     # Remove duplicate characters from key
     key = remove_duplicates(key.upper())
@@ -40,7 +40,7 @@ def create_cipher_map(key: str) -> dict:
     return cipher_alphabet
 
 
-def encipher(message: str, cipher_map: dict) -> str:
+def encipher(message: str, cipher_map: dict[str, str]) -> str:
     """
     Enciphers a message given a cipher map.
     :param message: Message to encipher
@@ -52,7 +52,7 @@ def encipher(message: str, cipher_map: dict) -> str:
     return "".join(cipher_map.get(ch, ch) for ch in message.upper())
 
 
-def decipher(message: str, cipher_map: dict) -> str:
+def decipher(message: str, cipher_map: dict[str, str]) -> str:
     """
     Deciphers a message given a cipher map
     :param message: Message to decipher
@@ -67,7 +67,7 @@ def decipher(message: str, cipher_map: dict) -> str:
     return "".join(rev_cipher_map.get(ch, ch) for ch in message.upper())
 
 
-def main():
+def main() -> None:
     """
     Handles I/O
     :return: void

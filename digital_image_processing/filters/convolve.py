@@ -1,8 +1,8 @@
 # @Author  : lightXu
 # @File    : convolve.py
 # @Time    : 2019/7/8 0008 下午 16:13
-from cv2 import imread, cvtColor, COLOR_BGR2GRAY, imshow, waitKey
-from numpy import array, zeros, ravel, pad, dot, uint8
+from cv2 import COLOR_BGR2GRAY, cvtColor, imread, imshow, waitKey
+from numpy import array, dot, pad, ravel, uint8, zeros
 
 
 def im2col(image, block_size):
@@ -11,8 +11,8 @@ def im2col(image, block_size):
     dst_width = rows - block_size[0] + 1
     image_array = zeros((dst_height * dst_width, block_size[1] * block_size[0]))
     row = 0
-    for i in range(0, dst_height):
-        for j in range(0, dst_width):
+    for i in range(dst_height):
+        for j in range(dst_width):
             window = ravel(image[i : i + block_size[0], j : j + block_size[1]])
             image_array[row, :] = window
             row += 1

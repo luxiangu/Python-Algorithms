@@ -17,7 +17,7 @@ class CircularQueue:
         >>> len(cq)
         0
         >>> cq.enqueue("A")  # doctest: +ELLIPSIS
-        <circular_queue.CircularQueue object at ...
+        <data_structures.queue.circular_queue.CircularQueue object at ...
         >>> len(cq)
         1
         """
@@ -25,6 +25,7 @@ class CircularQueue:
 
     def is_empty(self) -> bool:
         """
+        Checks whether the queue is empty or not
         >>> cq = CircularQueue(5)
         >>> cq.is_empty()
         True
@@ -35,6 +36,7 @@ class CircularQueue:
 
     def first(self):
         """
+        Returns the first element of the queue
         >>> cq = CircularQueue(5)
         >>> cq.first()
         False
@@ -45,14 +47,15 @@ class CircularQueue:
 
     def enqueue(self, data):
         """
-        This function insert an element in the queue using self.rear value as an index
+        This function inserts an element at the end of the queue using self.rear value
+        as an index.
         >>> cq = CircularQueue(5)
         >>> cq.enqueue("A")  # doctest: +ELLIPSIS
-        <circular_queue.CircularQueue object at ...
+        <data_structures.queue.circular_queue.CircularQueue object at ...
         >>> (cq.size, cq.first())
         (1, 'A')
         >>> cq.enqueue("B")  # doctest: +ELLIPSIS
-        <circular_queue.CircularQueue object at ...
+        <data_structures.queue.circular_queue.CircularQueue object at ...
         >>> (cq.size, cq.first())
         (2, 'A')
         """
@@ -67,7 +70,7 @@ class CircularQueue:
     def dequeue(self):
         """
         This function removes an element from the queue using on self.front value as an
-        index
+        index and returns it
         >>> cq = CircularQueue(5)
         >>> cq.dequeue()
         Traceback (most recent call last):

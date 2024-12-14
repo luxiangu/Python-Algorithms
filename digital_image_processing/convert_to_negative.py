@@ -1,8 +1,8 @@
 """
-    Implemented an algorithm using opencv to convert a colored image into its negative
+Implemented an algorithm using opencv to convert a colored image into its negative
 """
 
-from cv2 import imread, imshow, waitKey, destroyAllWindows
+from cv2 import destroyAllWindows, imread, imshow, waitKey
 
 
 def convert_to_negative(img):

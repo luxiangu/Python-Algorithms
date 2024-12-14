@@ -1,8 +1,9 @@
 # https://en.wikipedia.org/wiki/Simulated_annealing
 import math
 import random
+from typing import Any
 
-from hill_climbing import SearchProblem
+from .hill_climbing import SearchProblem
 
 
 def simulated_annealing(
@@ -16,23 +17,25 @@ def simulated_annealing(
     start_temperate: float = 100,
     rate_of_decrease: float = 0.01,
     threshold_temp: float = 1,
-) -> SearchProblem:
+) -> Any:
     """
-        implementation of the simulated annealing algorithm. We start with a given state, find
-            all its neighbors. Pick a random neighbor, if that neighbor improves the solution, we move
-            in that direction, if that neighbor does not improve the solution, we generate a random
-            real number between 0 and 1, if the number is within a certain range (calculated using
-            temperature) we move in that direction, else we pick another neighbor randomly and repeat the process.
-            Args:
-                search_prob: The search state at the start.
-                find_max: If True, the algorithm should find the minimum else the minimum.
-                max_x, min_x, max_y, min_y: the maximum and minimum bounds of x and y.
-                visualization: If True, a matplotlib graph is displayed.
-                start_temperate: the initial temperate of the system when the program starts.
-                rate_of_decrease: the rate at which the temperate decreases in each iteration.
-                threshold_temp: the threshold temperature below which we end the search
-            Returns a search state having the maximum (or minimum) score.
-        """
+    Implementation of the simulated annealing algorithm. We start with a given state,
+    find all its neighbors. Pick a random neighbor, if that neighbor improves the
+    solution, we move in that direction, if that neighbor does not improve the solution,
+    we generate a random real number between 0 and 1, if the number is within a certain
+    range (calculated using temperature) we move in that direction, else we pick
+    another neighbor randomly and repeat the process.
+
+    Args:
+        search_prob: The search state at the start.
+        find_max: If True, the algorithm should find the minimum else the minimum.
+        max_x, min_x, max_y, min_y: the maximum and minimum bounds of x and y.
+        visualization: If True, a matplotlib graph is displayed.
+        start_temperate: the initial temperate of the system when the program starts.
+        rate_of_decrease: the rate at which the temperate decreases in each iteration.
+        threshold_temp: the threshold temperature below which we end the search
+    Returns a search state having the maximum (or minimum) score.
+    """
     search_end = False
     current_state = search_prob
     current_temp = start_temperate
@@ -82,7 +85,7 @@ def simulated_annealing(
             current_state = next_state
 
     if visualization:
-        import matplotlib.pyplot as plt
+        from matplotlib import pyplot as plt
 
         plt.plot(range(iterations), scores)
         plt.xlabel("Iterations")
@@ -94,7 +97,7 @@ def simulated_annealing(
 if __name__ == "__main__":
 
     def test_f1(x, y):
-        return (x ** 2) + (y ** 2)
+        return (x**2) + (y**2)
 
     # starting the problem with initial coordinates (12, 47)
     prob = SearchProblem(x=12, y=47, step_size=1, function_to_optimize=test_f1)
@@ -117,7 +120,7 @@ if __name__ == "__main__":
     )
 
     def test_f2(x, y):
-        return (3 * x ** 2) - (6 * y)
+        return (3 * x**2) - (6 * y)
 
     prob = SearchProblem(x=3, y=4, step_size=1, function_to_optimize=test_f1)
     local_min = simulated_annealing(prob, find_max=False, visualization=True)

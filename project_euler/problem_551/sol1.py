@@ -12,9 +12,9 @@ You are given a(10^6) = 31054319.
 Find a(10^15)
 """
 
-ks = [k for k in range(2, 20 + 1)]
-base = [10 ** k for k in range(ks[-1] + 1)]
-memo = {}
+ks = range(2, 20 + 1)
+base = [10**k for k in range(ks[-1] + 1)]
+memo: dict[int, dict[int, list[list[int]]]] = {}
 
 
 def next_term(a_i, k, i, n):
@@ -40,12 +40,8 @@ def next_term(a_i, k, i, n):
     ending term is a_10=62, then (61, 9) is returned.
     """
     # ds_b - digitsum(b)
-    ds_b = 0
-    for j in range(k, len(a_i)):
-        ds_b += a_i[j]
-    c = 0
-    for j in range(min(len(a_i), k)):
-        c += a_i[j] * base[j]
+    ds_b = sum(a_i[j] for j in range(k, len(a_i)))
+    c = sum(a_i[j] * base[j] for j in range(min(len(a_i), k)))
 
     diff, dn = 0, 0
     max_dn = n - i
@@ -171,7 +167,7 @@ def add(digits, k, addend):
         digits.append(digit)
 
 
-def solution(n):
+def solution(n: int = 10**15) -> int:
     """
     returns n-th term of sequence
 
@@ -196,9 +192,9 @@ def solution(n):
 
     a_n = 0
     for j in range(len(digits)):
-        a_n += digits[j] * 10 ** j
+        a_n += digits[j] * 10**j
     return a_n
 
 
 if __name__ == "__main__":
-    print(solution(10 ** 15))
+    print(f"{solution() = }")
